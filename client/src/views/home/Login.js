@@ -5,6 +5,8 @@ import { withRouter } from "react-router";
 import "../../styles/Home.scss";
 
 const baseURL = "http://localhost:3000";
+
+const userData = {username: ''};
 class Login extends Component {
   state = {
     user: "",
@@ -40,19 +42,18 @@ class Login extends Component {
       .then((res) => {
         if (res.data.status === 1) {
           alert("Login success!");
+          userData.username = this.state.user;
           setTimeout(() => {
             this.props.history.push("/farm");
-            
-          }, 2000);
+          }, 0);
         } else {
-          alert("Login register!");
+          alert("Login error!");
         }
       })
       .catch((err) => {
         console.log(err);
       });
-    e.preventDefault();
-    console.log(this.state);
+    // e.preventDefault();
   };
 
   render() {
@@ -102,3 +103,4 @@ class Login extends Component {
 }
 
 export default withRouter(Login);
+export {userData};

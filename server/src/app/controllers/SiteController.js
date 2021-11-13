@@ -48,7 +48,9 @@ class SiteController {
     const currentUser = req.body;
     for (let i = 0; i < users.length; i++) {
       if (users[i].username == currentUser.username) {
-          users[i].status = false;
+          User.update({status: 0}, {where: {
+            username : currentUser.username
+          }})
           res.send({status: 1});
           return;
         }

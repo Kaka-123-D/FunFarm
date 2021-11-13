@@ -31,23 +31,9 @@ class Register extends Component {
     });
   };
 
-  // handleRegister = (event) => {
-  //   event.preventDefault();
-  //   if (!this.state.user || !this.state.pass || !this.state.pass2) {
-  //     alert("missing params");
-  //     return;
-  //   }
-
-  //   this.setState({
-  //     user: "",
-  //     pass: "",
-  //     pass2: "",
-  //   });
-  // };
-
   handleRegister = (e) => {
     if (!this.state.user || !this.state.pass || !this.state.pass2) {
-      // alert("missing params");
+      alert("missing params");
       return;
     }
     if (this.state.pass != this.state.pass2) {
@@ -61,22 +47,16 @@ class Register extends Component {
         username: this.state.user,
         password: this.state.pass,
       },
-    })
-      .then((res) => {
-        if (res.data.status === 1) {
-          // alert("Register success!");
-          setTimeout(() => {
-            this.props.history.push('/login');
-          }, 2000);
-        }
-        else {
-          // alert("Error register!");
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    console.log(this.state);
+    }).then((res) => {
+      if (res.data.status === 1) {
+        alert("Register success!");
+        setTimeout(() => {
+          this.props.history.push("/login");
+        }, 2000);
+      } else {
+        alert("Error register!");
+      }
+    });
   };
 
   render() {
