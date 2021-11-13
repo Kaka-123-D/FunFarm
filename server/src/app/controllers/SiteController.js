@@ -6,7 +6,7 @@ const db = require('../../config/db/index');
 
 class SiteController {
   index(req, res) {
-    res.sendFile(path.join(process.cwd(), 'build', 'index.html'));
+    res.sendFile(path.join(process.cwd(), 'src/build', 'index.html'));
   }
 
   async register(req, res) {

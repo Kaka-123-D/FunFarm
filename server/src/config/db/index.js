@@ -1,7 +1,7 @@
 const { Sequelize } = require('sequelize');
 
 async function connect() {
-  const sequelize = new Sequelize('fun_farms', 'root', '5201314D.k', {
+  const sequelize = new Sequelize('fun_farms', 'root', null, {
     host: 'localhost',
     dialect: 'mysql'
   });

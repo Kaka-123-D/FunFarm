@@ -2,7 +2,7 @@
 
 const { Sequelize, DataTypes, Model } = require('sequelize');
 const PlantLine = require('./PlantLine');
-const sequelize = new Sequelize('fun_farms', 'root', '#Qm4808590', {
+const sequelize = new Sequelize('fun_farms', 'root', null, {
   host: 'localhost',
   dialect: 'mysql'
 });

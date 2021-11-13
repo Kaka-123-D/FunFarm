@@ -40,8 +40,10 @@ class Login extends Component {
       .then((res) => {
         if (res.data.status === 1) {
           alert("Login success!");
-
-          this.props.history.push("/farm");
+          setTimeout(() => {
+            this.props.history.push("/farm");
+            
+          }, 2000);
         } else {
           alert("Login register!");
         }

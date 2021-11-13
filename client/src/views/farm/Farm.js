@@ -11,7 +11,7 @@ export default class Farm extends Component {
           <div className="farm-background">
             <Nav />
             <div className="farm">
-              <SidebarItem />
+              <SidebarItem/>
               <Land />
             </div>
           </div>

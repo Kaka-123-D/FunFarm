@@ -5,7 +5,7 @@ const User = require('../users/User');
 const Land = require('../lands/Land');
 const Tool = require('../tools/Tool');
 const Plant = require('../plants/Plant');
-const sequelize = new Sequelize('fun_farms', 'root', '#Qm4808590', {
+const sequelize = new Sequelize('fun_farms', 'root', null, {
   host: 'localhost',
   dialect: 'mysql'
 });
