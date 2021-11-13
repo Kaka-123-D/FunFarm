@@ -1,11 +1,7 @@
+const path = require('path');
 const process = require('process');
 const User = require('../models/users/User');
-const PlantLine = require('../models/plants/PlantLine');
-const Plant = require('../models/plants/Plant');
-const LandLine = require('../models/lands/LandLine');
-const Land = require('../models/lands/Land');
-const Tool = require('../models/tools/Tool');
-const Inventory = require('../models/inventories/Inventory')
+
 const db = require('../../config/db/index');
 
 class SiteController {
@@ -15,7 +11,7 @@ class SiteController {
 
   async register(req, res) {
     db.connect();
-    const users = await User.findAll({attributes: ['username', 'password']});
+    const users = await User.findAll({ attributes: ["username", "password"] });
     const currentUser = req.body;
     for (let i = 0; i < users.length; i++) {
       if (users[i].username == currentUser.username) {
@@ -32,10 +28,13 @@ class SiteController {
     db.connect();
     const users = await User.findAll({attributes: ['username', 'password']});
     const currentUser = req.body;
+    
     for (let i = 0; i < users.length; i++) {
       if (users[i].username == currentUser.username && 
-        user[i].password == currentUser.password) {
-          users[i].status = true;
+        users[i].password == currentUser.password) {
+          User.update({status: 1}, {where: {
+            username : currentUser.username
+          }})
           res.send({status: 1});
           return;
         }
@@ -58,9 +57,10 @@ class SiteController {
   }
 
   async test(req, res) {
-    db.connect();
-    await User.create({username: 'vtk123', password: 'khai123'});
-    res.send('success!');
+    // db.connect();
+    // await User.create({username: 'vtk123', password: 'khai123'});
+    // res.send('success!');
+    res.send('Lỗi');
   }
 }
 

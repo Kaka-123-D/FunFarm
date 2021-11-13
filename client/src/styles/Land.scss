@@ -1,0 +1,38 @@
+// * {
+//     border: 1px solid black;
+// }
+.land {
+    flex: 8;
+    border: 2px solid black;
+    border-radius: 20px;
+    margin: 20px 20px 0px 0px;
+
+    #info-land {
+        display: flex;
+        padding: 30px;
+        background-color: rgb(80, 85, 71);
+        border-top-left-radius: 20px;
+        border-top-right-radius: 20px;
+
+        .add-plant {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgb(4, 202, 54);
+            box-shadow: rgb(0 0 0 / 25%) 0px 4px 0px, rgb(0 0 0 / 25%) 0px -6px 0px inset;
+            font-size: 30px;
+            font-weight: bold;
+            cursor: pointer;
+            color: white;
+
+            &:hover {
+                background-color: rgb(11, 243, 135);
+            }
+        }
+    }
+
+    #body-land {
+        overflow-y: scroll;
+        height: 500px;
+    }
+}

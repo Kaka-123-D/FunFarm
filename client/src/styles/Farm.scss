@@ -1,0 +1,10 @@
+.farm-background {
+    background: url("../assets/images/farm-background.jpg");
+    background-size: cover;
+    height: 100vh;
+    margin: 0;
+
+    .farm {
+        display: flex;
+    }
+}

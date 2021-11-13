@@ -8,15 +8,19 @@ export default class Home extends Component {
       <div className="background">
         <div className="button-group">
           <Link to="/register">
-            <button className="create-acc-btn">Create Account</button>
+            <button className="btn">Create Account</button>
             <br />
           </Link>
           <Link to="/login">
-            <button className="create-acc-btn">Login</button>
+            <button className="btn">Login</button>
+            <br />
+          </Link>
+          <Link to="/farm">
+            <button className="btn">Farm</button>
             <br />
           </Link>
           <Link to="/about">
-            <button className="create-acc-btn">About Us</button>
+            <button className="btn">About Us</button>
           </Link>
         </div>
       </div>

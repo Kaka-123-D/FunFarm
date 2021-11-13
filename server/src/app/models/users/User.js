@@ -1,9 +1,9 @@
 "use strict";
 
 const { Sequelize, DataTypes, Model } = require('sequelize');
-const sequelize = new Sequelize('fun_farms', 'root', '#Qm4808590', {
-  host: 'localhost',
-  dialect: 'mysql'
+const sequelize = new Sequelize("fun_farms", "root", "5201314D.k", {
+  host: "localhost",
+  dialect: "mysql",
 });
 
 class User extends Model {

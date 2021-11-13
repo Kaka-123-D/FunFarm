@@ -1,8 +1,11 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { withRouter } from "react-router";
 import "../../styles/Home.scss";
 
-export default class Login extends Component {
+const baseURL = "http://localhost:3000";
+class Login extends Component {
   state = {
     user: "",
     pass: "",
@@ -21,23 +24,42 @@ export default class Login extends Component {
     });
   };
 
-  handleLogin = (event) => {
-    event.preventDefault();
+  handleLogin = (e) => {
     if (!this.state.user || !this.state.pass) {
       alert("missing params");
       return;
     }
+    axios({
+      method: "post",
+      url: baseURL + "/login",
+      data: {
+        username: this.state.user,
+        password: this.state.pass,
+      },
+    })
+      .then((res) => {
+        if (res.data.status === 1) {
+          alert("Login success!");
 
-    this.setState({
-      user: "",
-      pass: "",
-    });
+          this.props.history.push("/farm");
+        } else {
+          alert("Login register!");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    e.preventDefault();
+    console.log(this.state);
   };
 
   render() {
     return (
       <div className="background">
         <div className="container">
+          <Link to="/">
+            <button> X </button>
+          </Link>
           <div className="button-group">
             <div id="switch-login"></div>
             <button className="toggle-btn">Login</button>
@@ -45,7 +67,7 @@ export default class Login extends Component {
               <button className="toggle-btn">Register</button>
             </Link>
           </div>
-          <form>
+          <div className="form">
             <div>
               <input
                 id="user"
@@ -70,9 +92,11 @@ export default class Login extends Component {
                 Login
               </button>
             </div>
-          </form>
+          </div>
         </div>
       </div>
     );
   }
 }
+
+export default withRouter(Login);

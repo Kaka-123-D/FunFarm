@@ -1,11 +1,12 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import { withRouter } from "react-router";
 import "../../styles/Home.scss";
-import axios from 'axios';
+import axios from "axios";
 
-const baseURL = 'http://localhost:3000';
+const baseURL = "http://localhost:3000";
 
-export default class Register extends Component {
+class Register extends Component {
   state = {
     user: "",
     pass: "",
@@ -45,6 +46,14 @@ export default class Register extends Component {
   // };
 
   handleRegister = (e) => {
+    if (!this.state.user || !this.state.pass || !this.state.pass2) {
+      // alert("missing params");
+      return;
+    }
+    if (this.state.pass != this.state.pass2) {
+      alert("pass 1 and pass 2 must gioosng nhau");
+      return;
+    }
     axios({
       method: "post",
       url: baseURL + "/register",
@@ -52,20 +61,31 @@ export default class Register extends Component {
         username: this.state.user,
         password: this.state.pass,
       },
-    }).then(res => {
-      console.log(res.data);
-    }).catch(err => {
-      console.log(err);
     })
-      e.preventDefault();
-      console.log(this.state);
-    
-  }
+      .then((res) => {
+        if (res.data.status === 1) {
+          // alert("Register success!");
+          setTimeout(() => {
+            this.props.history.push('/login');
+          }, 2000);
+        }
+        else {
+          // alert("Error register!");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    console.log(this.state);
+  };
 
   render() {
     return (
       <div className="background">
         <div className="container">
+          <Link to="/">
+            <button> X </button>
+          </Link>
           <div className="button-group">
             <div id="switch-register"></div>
             <Link to="/login">
@@ -73,7 +93,7 @@ export default class Register extends Component {
             </Link>
             <button className="toggle-btn">Register</button>
           </div>
-          <form>
+          <div className="form">
             <div>
               <input
                 id="user"
@@ -109,9 +129,10 @@ export default class Register extends Component {
                 Register
               </button>
             </div>
-          </form>
+          </div>
         </div>
       </div>
     );
   }
 }
+export default withRouter(Register);
