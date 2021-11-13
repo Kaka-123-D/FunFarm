@@ -1,18 +1,18 @@
 "use strict";
 
 const { Sequelize, DataTypes, Model } = require('sequelize');
-const sequelize = new Sequelize('fun_farms', 'root', '5201314D.k', {
+const sequelize = new Sequelize('fun_farms', 'root', '#Qm4808590', {
   host: 'localhost',
   dialect: 'mysql'
 });
 
 class User extends Model {
-  getUserName() {
-    return this.userName;
+  getUsername() {
+    return this.username;
   }
-  setUserName(userName) {
-    if (userName != '' && userName.length > 6) {
-      this.userName = userName;
+  setUsername(username) {
+    if (username != '' && username.length > 6) {
+      this.username = username;
     }
   }
 }
@@ -24,11 +24,11 @@ User.init({
     primaryKey: true,
     autoIncrement: true
   }, 
-  userName: {
+  username: {
     type: DataTypes.STRING,
     allowNull: false
   },
-  passWord: {
+  password: {
     type: DataTypes.TEXT,
     allowNull: false
   },

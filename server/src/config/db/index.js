@@ -1,13 +1,13 @@
 const { Sequelize } = require('sequelize');
 
 async function connect() {
-  const sequelize = new Sequelize('fun_farms', 'root', '5201314D.k', {
+  const sequelize = new Sequelize('fun_farms', 'root', '#Qm4808590', {
     host: 'localhost',
     dialect: 'mysql'
   });
   try {
     await sequelize.authenticate();
-    console.log('Connection has been established successfully.');
+    console.log('Connect success!');
   } catch (error) {
     console.error('Unable to connect to the database:', error);
   }
