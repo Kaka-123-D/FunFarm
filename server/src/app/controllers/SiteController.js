@@ -35,6 +35,21 @@ class SiteController {
     for (let i = 0; i < users.length; i++) {
       if (users[i].username == currentUser.username && 
         user[i].password == currentUser.password) {
+          users[i].status = true;
+          res.send({status: 1});
+          return;
+        }
+    }
+    res.send({status: 0});
+  }
+
+  async logout(req, res) {
+    db.connect();
+    const users = await User.findAll({attributes: ['username', 'password']});
+    const currentUser = req.body;
+    for (let i = 0; i < users.length; i++) {
+      if (users[i].username == currentUser.username) {
+          users[i].status = false;
           res.send({status: 1});
           return;
         }
@@ -44,40 +59,8 @@ class SiteController {
 
   async test(req, res) {
     db.connect();
-
-    // await Inventory.sync();
-    // const user = await User.findOne({where: {username: 'nq0118'}});
-    // const inventory = await Inventory.create({});
-    // await user.setInventory(inventory);
-    // console.log('add inventory success!');
-
-    // await Plant.sync();
-    // const plantLines = await PlantLine.findOne({where: {plantLine: 'lửa'}});
-    // const plant = await Plant.create({amountLEGenerated: 980,timeToGrow: '48:00:00', image: 'rare-plant.png'});
-    // await plantLines.addPlant(plant);
-    // await inventory.addPlant(plant);
-    // console.log('add plant to inventory success!');
-
-    // await Tool.sync();
-    // const tool = await Tool.create({toolName: 'Small Pot', 
-    //             textDescription: 'You need small pot to start farming.', 
-    //             priceSell: 50,
-    //             useTime: '240:00:00',
-    //             useNumber: 1,
-    //             image: 'small-pot.png'
-    //           });
-    // await inventory.addTool(tool);
-    // console.log('add tool to inventory success!');
-
-    // await Land.sync();
-    // const landLines = await LandLine.findOne({where: {landLine: 'default'}});
-    // const land = await Land.create({amountPlot: 6, image: 'default-land.png'});
-    // await landLines.addLand(land);
-    // await inventory.addLand(land);
-    // console.log('add land to inventory success!');
-
-    const inventory = await Inventory.findOne({where: {inventoryId: 1}});
-    console.log(await inventory.getPlants());
+    await User.create({username: 'vtk123', password: 'khai123'});
+    res.send('success!');
   }
 }
 
