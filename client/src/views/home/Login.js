@@ -13,6 +13,7 @@ class Login extends Component {
     user: "",
     pass: "",
     errMessage: "",
+
   };
 
   handleOnChangeUsername = (event) => {
@@ -44,6 +45,7 @@ class Login extends Component {
         if (res.data.status === 1) {
           alert("Login success!");
           userData.username = this.state.user;
+          this.props.handleLoginOnUsername(this.state.user);
           setTimeout(() => {
             this.props.history.push("/farm");
           }, 0);

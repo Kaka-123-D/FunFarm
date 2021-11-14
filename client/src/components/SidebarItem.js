@@ -33,10 +33,6 @@ export default class SidebarItem extends Component {
   //   })
   // }
 
-  handleUseOpenShop = () => {
-    this.props.handleOpenShop();
-  };
-
   render() {
     let { arrItems, openShop, handleUseItem } = this.props;
     return (
@@ -65,7 +61,6 @@ export default class SidebarItem extends Component {
             src={openShop === false ? shop : farm}
             alt="shop"
             id="shop"
-            onClick={() => this.handleUseOpenShop()}
           />
         </Link>
       </div>

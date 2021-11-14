@@ -1,39 +1,28 @@
 import React, { Component } from "react";
 import "../styles/selectPlant.scss";
-import Sapling from "../assets/images/sapling.svg";
-import rootTree from "../assets/images/rootTree.png";
+import sapling from "../assets/images/sapling.svg";
+import mama from "../assets/images/mama.png";
 
 export default class SelectPlant extends Component {
-  state = {
-    plants: [
-      { id: 0, name: "sapling", img: Sapling },
-      { id: 0, name: "sapling", img: Sapling },
-      { id: 0, name: "sapling", img: Sapling },
-      { id: 0, name: "sapling", img: Sapling },
-      { id: 0, name: "sapling", img: Sapling },
-      { id: 0, name: "sapling", img: Sapling },
-      { id: 0, name: "sapling", img: Sapling },
-      { id: 0, name: "sapling", img: Sapling },
-      { id: 1, name: "root tree", img: rootTree },
-    ],
-    tools: [{ type: 0, name: "small pot" }],
-  };
-
   handleSelectPLant(id) {}
 
   render() {
+    let { arrPlantsInInventory } = this.props;
     return (
       <div className="table-select-plant">
         <h1>Select a plant:</h1>
         <div id="plants">
-          {this.state.plants.map((item, index) => {
+          {arrPlantsInInventory.map((item, index) => {
             return (
-              <img
-                src={item.img}
-                alt=""
-                onClick={() => this.handleSelectPLant(item.id)}
-                className="plant-img"
-              />
+              <>
+                <img
+                  src={item.img}
+                  alt=""
+                  onClick={() => this.handleSelectPLant(item.name)}
+                  className="plant-img"
+                />
+                <span>X {item.amount}</span>
+              </>
             );
           })}
         </div>

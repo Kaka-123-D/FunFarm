@@ -6,11 +6,11 @@ import water from "../../assets/images/water.png";
 import scarecrow from "../../assets/images/scarecrow.png";
 import greenhouse from "../../assets/images/greenhouse.png";
 import sapling from "../../assets/images/sapling.svg";
-import rootTree from "../../assets/images/rootTree.png";
+import mama from "../../assets/images/mama.png";
 
 export default class ShopTool extends Component {
   render() {
-    let { moneyAmount, handleBuyItem } = this.props;
+    let { moneyAmount, handleBuyItem ,handleBuyPLant} = this.props;
     return (
       <div className="shop">
         <div id="info-shop">
@@ -55,14 +55,14 @@ export default class ShopTool extends Component {
           <div id="sapling" className="item-card">
             <img src={sapling} alt="" />
             <h2>Sapling</h2>
-            <button onClick={() => handleBuyItem(6)} className="buy-btn">
+            <button onClick={() => handleBuyPLant(0)} className="buy-btn">
               50 LE
             </button>
           </div>
-          <div id="rootTree" className="item-card">
-            <img src={rootTree} alt="" />
+          <div id="mama" className="item-card">
+            <img src={mama} alt="" />
             <h2>Root tree</h2>
-            <button onClick={() => handleBuyItem(7)} className="buy-btn">
+            <button onClick={() => handleBuyPLant(1)} className="buy-btn">
               75 LE
             </button>
           </div>

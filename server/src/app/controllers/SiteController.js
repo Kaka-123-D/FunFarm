@@ -41,10 +41,16 @@ class SiteController {
       for (let i = 0; i < users.length; i++) {
       if (users[i].username == currentUser.username && 
         users[i].password == currentUser.password) {
-          await User.update({ status: 1 }, {where: {
-            username : currentUser.username
-          }})
-          res.send({ status: 1, data: await FarmController.index(users[i])});
+          await User.update(
+            { status: 1 },
+            {
+              where: {
+                username: currentUser.username,
+              },
+            }
+          );
+          //, data: await FarmController.index(users[i])
+          res.send({ status: 1 });
           return;
         }
       }

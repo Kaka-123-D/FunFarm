@@ -115,21 +115,23 @@ class FarmController {
     for (let i = 0; i < req.body.amount; i++) {
       let plant = {};
       if (req.body.plantType == 1) {
-        const plantLine = await PlantLine.findOne({where: {plantLine: "Sapling"}});
+        const plantLine = await PlantLine.findOne({where: {plantLine: "mama"}});
         plant = await Plant.create({
           amountLEGenerated: 850,
           timeToGrow: "144:00:00",
           image: "mother-tree.png",
+          plantName: "Sunflower mama",
         });
         await plantLine.addPlant(plant);
       } else {
         const plantLine = await PlantLine.findOne({
-          where: { plantLine: "mama" },
+          where: { plantLine: "Sapling" },
         });
         plant = await Plant.create({
           amountLEGenerated: 250,
           timeToGrow: "72:00:00",
           image: "child-tree.png",
+          plantName: "Sunflower Sapling",
         });
         await plantLine.addPlant(plant);
       }
@@ -139,6 +141,7 @@ class FarmController {
   }
 
   async buyTool(req, res) {
+    console.log(req.body.username);
     const user = await User.findOne({ where: { username: req.body.username } });
     const inventory = await user.getInventory();
     for (let i = 0; i < req.body.amount; i++) {
@@ -205,6 +208,10 @@ class FarmController {
       plantLine: "mama",
       textDescription:
         "A temporary mother tree that gives 850LE/144h, is not affected by weather events, and cannot drop seeds.",
+    });
+    await LandLine.create({
+      landLine: "default",
+      textDescription: "màu xám"
     });
 
     // db.connect();

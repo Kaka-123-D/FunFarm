@@ -43,7 +43,9 @@ export default class Land extends Component {
         </div>
         {show === true ?(
           <>
-          <SelectPlant/>
+          <SelectPlant
+            arrPlantsInInventory={this.props.arrPlantsInInventory}
+          />
           <button id="hidden" onClick={() => this.handleHiddenTable()}>X</button>
           </>
         ) : (

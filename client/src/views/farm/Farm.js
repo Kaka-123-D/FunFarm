@@ -10,6 +10,11 @@ import bigPot from "../../assets/images/bigPot.png";
 import water from "../../assets/images/water.png";
 import scarecrow from "../../assets/images/scarecrow.png";
 import greenhouse from "../../assets/images/greenhouse.png";
+import sapling from "../../assets/images/sapling.svg";
+import mama from "../../assets/images/mama.png";
+import axios from "axios";
+
+const baseURL = "http://localhost:3000";
 
 export default class Farm extends Component {
   state = {
@@ -22,7 +27,13 @@ export default class Farm extends Component {
       { type: 4, amount: 0, img: scarecrow },
       { type: 5, amount: 0, img: greenhouse },
     ],
+    arrPlantsInInventory: [
+      { name: "sapling", type: 0, amount: 2, img: sapling },
+      { name: "mama", type: 1, amount: 1, img: mama },
+    ],
+    arrPlants: [],
   };
+
   handleUseItem = (type) => {
     if (this.state.arrItems[type - 1].amount < 1) {
       alert("dont enought item!");
@@ -32,11 +43,40 @@ export default class Farm extends Component {
     arr[type - 1] = { ...arr[type - 1], amount: arr[type - 1].amount - 1 };
     this.setState({ arrItems: arr });
   };
+
   handleBuyItem = (type) => {
     let arr = [...this.state.arrItems];
     arr[type - 1] = { ...arr[type - 1], amount: arr[type - 1].amount + 1 };
     this.setState({ arrItems: arr });
+    axios({
+      method: "post",
+      url: baseURL + "/farms/buy-tool",
+      data: {
+        username: this.props.username,
+        amount: 1,
+        toolType: type,
+      },
+    }).then((res) => {
+      res.data.status === 1 ? alert("Buy success!") : alert("Error");
+    });
   };
+  handleBuyPLant = (type) => {
+    let arr = [...this.state.arrPlantsInInventory];
+    arr[type] = { ...arr[type], amount: arr[type].amount + 1 };
+    this.setState({ arrPlantsInInventory: arr });
+    axios({
+      method: "post",
+      url: baseURL + "/farms/buy-plant",
+      data: {
+        username: this.props.username,
+        amount: 1,
+        plantType: type,
+      },
+    }).then((res) => {
+      res.data.status === 1 ? alert("Buy success!") : alert("Error");
+    });
+  };
+
   render() {
     return (
       <div className="farm-background">
@@ -53,6 +93,7 @@ export default class Farm extends Component {
                 <ShopTool
                   moneyAmount={this.state.moneyAmount}
                   handleBuyItem={this.handleBuyItem}
+                  handleBuyPLant={this.handleBuyPLant}
                 />
               </div>
             </Route>
@@ -63,7 +104,7 @@ export default class Farm extends Component {
                   openShop={false}
                   handleUseItem={this.handleUseItem}
                 />
-                <Land />
+                <Land arrPlantsInInventory={this.state.arrPlantsInInventory} />
               </div>
             </Route>
           </Switch>
