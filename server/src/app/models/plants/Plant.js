@@ -29,6 +29,10 @@ Plant.init({
   image: {
     type: DataTypes.TEXT,
     allowNull: false
+  },
+  plantName: {
+    type: DataTypes.STRING,
+    allowNull: false
   }
 }, {
   sequelize,

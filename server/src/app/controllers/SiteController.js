@@ -1,6 +1,9 @@
 const path = require('path');
 const process = require('process');
+const Inventory = require('../models/inventories/Inventory');
+const Land = require('../models/lands/Land');
 const User = require('../models/users/User');
+const LandLine = require('../models/lands/LandLine');
 const FarmController = require('./FarmController');
 
 class SiteController {
@@ -17,7 +20,15 @@ class SiteController {
           return;
         }
     }
-    await User.create({username: req.body.username, password: req.body.password});
+    const newUser = await User.create({username: req.body.username, password: req.body.password});
+    const inventory = await Inventory.create();
+    const landLine = await LandLine.findOne({
+      where: { landLine: "default" },
+    });
+    const land = await Land.create({ amountPlot: 6, image: 'landDefault.png'});
+    await newUser.setInventory(inventory);
+    await landLine.addLand(land);
+    await inventory.addLand(land);
     res.send({status: 1});
   }
 
