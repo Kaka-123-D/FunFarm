@@ -54,6 +54,29 @@ class FarmController {
     res.send({farming: farming});
   }
 
+  async buyPlant(req, res) {
+    const user = await User.findOne({where: {username: req.body.username}});
+    const inventory = await user.getInventory();
+    for (let i = 0; i < req.body.amount; i++) {
+      let plant = {};
+      if (req.body.plantType == 'mother') {
+        plant = await Plant.create({
+          amountLEGenerated: 850,
+          timeToGrow: "144:00:00",
+          image: "mother-tree.png",
+        });
+      } else {
+        plant = await Plant.create({
+          amountLEGenerated: 250,
+          timeToGrow: "72:00:00",
+          image: "child-tree.png",
+        });
+      }
+      await inventory.addPlant(plant);
+    }
+    res.send({status: 1});
+  }
+
   async test(req, res) {
     // db.connect();
 
