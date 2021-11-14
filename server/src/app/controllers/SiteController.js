@@ -1,8 +1,7 @@
 const path = require('path');
 const process = require('process');
 const User = require('../models/users/User');
-
-const db = require('../../config/db/index');
+const FarmController = require('./FarmController');
 
 class SiteController {
   index(req, res) {
@@ -10,8 +9,7 @@ class SiteController {
   }
 
   async register(req, res) {
-    db.connect();
-    const users = await User.findAll({ attributes: ["username", "password"] });
+    const users = await User.findAll();
     const currentUser = req.body;
     for (let i = 0; i < users.length; i++) {
       if (users[i].username == currentUser.username) {
@@ -19,43 +17,47 @@ class SiteController {
           return;
         }
     }
-    await User.sync();
-    const jane = await User.create({username: req.body.username, password: req.body.password});
+    await User.create({username: req.body.username, password: req.body.password});
     res.send({status: 1});
   }
 
   async login(req, res) {
-    db.connect();
-    const users = await User.findAll({attributes: ['username', 'password']});
-    const currentUser = req.body;
-    
-    for (let i = 0; i < users.length; i++) {
+    const users = await User.findAll();
+    if (users.length == 0) {
+      res.send({ status: 0 });
+    } else {
+      const currentUser = req.body;
+      for (let i = 0; i < users.length; i++) {
       if (users[i].username == currentUser.username && 
         users[i].password == currentUser.password) {
-          User.update({status: 1}, {where: {
+          await User.update({ status: 1 }, {where: {
             username : currentUser.username
           }})
-          res.send({status: 1});
+          res.send({ status: 1, data: await FarmController.index(users[i])});
           return;
         }
+      }
+      res.send({ status: 0 });
     }
-    res.send({status: 0});
   }
 
   async logout(req, res) {
-    db.connect();
-    const users = await User.findAll({attributes: ['username', 'password']});
-    const currentUser = req.body;
-    for (let i = 0; i < users.length; i++) {
+    const users = await User.findAll({ attributes: ["username", "password"] });
+    if (users.length == 0) {
+      res.send({ status: 0 });
+    } else {
+      const currentUser = req.body;
+      for (let i = 0; i < users.length; i++) {
       if (users[i].username == currentUser.username) {
-          User.update({status: 0}, {where: {
-            username : currentUser.username
-          }})
-          res.send({status: 1});
-          return;
+        await User.update({ status: 0 }, {where: {
+          username : currentUser.username
+        }})
+        res.send({ status: 1 });
+        return;
         }
+      }
+      res.send({ status: 0 });
     }
-    res.send({status: 0});
   }
 
   async test(req, res) {

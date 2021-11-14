@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 import App from './views/App';
 import reportWebVitals from './reportWebVitals';
 //cd ../client; npm run build; rm -r D:/fun-farm/server/src/build;mv D:/fun-farm/client/build D:/fun-farm/server/src; cd ../server; npm start  
+//cd ../client; npm run build; rm -r E:/Code/Project/FunFarm/server/src/build;mv E:/Code/Project/FunFarm/client/build E:/Code/Project/FunFarm/server/src; cd ../server; npm start
 ReactDOM.render(
   <React.StrictMode>
     <App />

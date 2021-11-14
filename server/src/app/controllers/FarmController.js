@@ -10,24 +10,22 @@ const Farming = require('../models/farming/Farming');
 const db = require('../../config/db/index');
 
 class FarmController {
-  async index(req, res) {
-    db.connect();
-    const user = await User.findOne({where: {username: req.query.username}});
+  async index(user) {
     const farmings = await user.getFarmings();
+    var data = {};
     if (farmings.length > 0) {
       for (let i = 0; i< farmings.length; i++) {
-        res.send({plant: await farmings[i].getPlant(), 
-                  land: await farmings[i].getLand(),
-                  tools: await farmings[i].getTools()
-                });
+        data = {
+          plant: await farmings[i].getPlant(), 
+          land: await farmings[i].getLand(),
+          tools: await farmings[i].getTools()
+        };
       }
-      return;
     }
-    res.send({error: 'Không có cây nào đang trồng'});
+    return data;
   }
 
   async growPlant(req, res) {
-    db.connect();
     const user = await User.findOne({where: {username: req.query.username}});
     const inventory = await user.getInventory();
     const plants = await inventory.getPlants({where: {plantId: req.query.plantId}});

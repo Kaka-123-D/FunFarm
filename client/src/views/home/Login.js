@@ -6,7 +6,8 @@ import "../../styles/Home.scss";
 
 const baseURL = "http://localhost:3000";
 
-const userData = {username: ''};
+const userData = {username: '', data: ''};
+
 class Login extends Component {
   state = {
     user: "",

@@ -7,7 +7,7 @@ async function connect() {
   });
   try {
     await sequelize.authenticate();
-    console.log('Connect success!');
+    console.log('Connect database success!');
   } catch (error) {
     console.error('Unable to connect to the database:', error);
   }
