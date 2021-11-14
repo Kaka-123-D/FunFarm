@@ -21,7 +21,10 @@ function App() {
             <Home />
           </Route>
           <Route path="/farm">
-            <Farm/>
+            <Farm />
+          </Route>
+          <Route path="/farm/shop">
+            <Farm />
           </Route>
           <Route path="/marketplace">
             <Marketplace />

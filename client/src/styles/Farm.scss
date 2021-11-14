@@ -3,8 +3,13 @@
     background-size: cover;
     height: 100vh;
     margin: 0;
+    position: flex;
+    min-height: 100%;
 
     .farm {
+        display: flex;
+    }
+    .shopTool {
         display: flex;
     }
 }

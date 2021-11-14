@@ -4,6 +4,7 @@ $size-circle: 17px;
 //   border: 2px solid #c6e065;
 // }
 .sidebar {
+  max-height: 600px;
   flex: 1;
   padding: 10px;
   padding-top: 20px;
@@ -54,9 +55,9 @@ $size-circle: 17px;
       height: $size-circle;
       line-height: $size-circle;
       border-radius: 50%;
-      font-size: 10px;
+      font-size: 13px;
       font-weight: bold;
-      color: rgb(245, 247, 244);
+      color: rgb(69, 104, 95);
       text-align: center;
       background: rgb(93, 209, 99);
       position: absolute;
@@ -83,10 +84,6 @@ $size-circle: 17px;
       &:hover {
         box-shadow: rgba(0, 0, 0, 0.3) 2px 8px 8px -5px;
         transform: translate3d(0, 2px, 0);
-      }
-
-      &:focus {
-        box-shadow: rgba(0, 0, 0, 0.3) 2px 8px 4px -6px;
       }
     }
   }

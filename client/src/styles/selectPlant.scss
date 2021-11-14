@@ -1,0 +1,24 @@
+.table-select-plant {
+  background-color: rgb(66, 64, 56);
+  position: fixed;
+  top: 30vh;
+  left: 30vw;
+  width: 500px;
+  height: 300px;
+  padding: 20px;
+  border-radius: 20px;
+  border: 2px solid black;
+  color: wheat;
+
+  #plants {
+    overflow-y: scroll;
+    max-height: 210px;
+
+    .plant-img {
+      cursor: pointer;
+      width: 100px;
+      margin-left: 5px;
+      display: inline-block;
+    }
+  }
+}

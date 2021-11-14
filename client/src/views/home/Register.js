@@ -52,7 +52,7 @@ class Register extends Component {
         alert("Register success!");
         setTimeout(() => {
           this.props.history.push("/login");
-        }, 2000);
+        }, 0);
       } else {
         alert("Error register!");
       }
