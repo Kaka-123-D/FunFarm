@@ -1,9 +1,9 @@
 const { Sequelize } = require('sequelize');
 
 async function connect() {
-  const sequelize = new Sequelize('fun_farms', 'root', null, {
-    host: 'localhost',
-    dialect: 'mysql'
+  const sequelize = new Sequelize("fun_farms", "root", null, {
+    host: "localhost",
+    dialect: "mysql"
   });
   try {
     await sequelize.authenticate();

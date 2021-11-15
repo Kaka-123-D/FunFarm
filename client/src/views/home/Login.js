@@ -30,7 +30,7 @@ class Login extends Component {
 
   handleLogin = (e) => {
     if (!this.state.user || !this.state.pass) {
-      alert("missing params");
+      alert("Các trường không được bỏ trống!");
       return;
     }
     axios({
