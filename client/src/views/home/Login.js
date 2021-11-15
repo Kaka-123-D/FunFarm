@@ -30,7 +30,7 @@ class Login extends Component {
 
   handleLogin = (e) => {
     if (!this.state.user || !this.state.pass) {
-      alert("missing params");
+      alert("Các trường không được bỏ trống!");
       return;
     }
     axios({
@@ -47,8 +47,9 @@ class Login extends Component {
           userData.username = this.state.user;
           this.props.handleLoginOnUsername(this.state.user);
           setTimeout(() => {
-            this.props.history.push("/farm");
             this.props.setDataFromServer(res.data);
+            this.props.history.push("/farm");
+            
           }, 0);
         } else {
           alert("Login error!");

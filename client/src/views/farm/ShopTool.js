@@ -20,35 +20,35 @@ export default class ShopTool extends Component {
           <div id="small-pot-tool" className="item-card">
             <img src={smallPot} alt="" />
             <h2>Small Pot</h2>
-            <button onClick={() => handleBuyItem(1)} className="buy-btn">
+            <button onClick={() => handleBuyItem(0)} className="buy-btn">
               25 LE
             </button>
           </div>
           <div id="big-pot-tool" className="item-card">
             <img src={bigPot} alt="" />
             <h2>Big Pot</h2>
-            <button onClick={() => handleBuyItem(2)} className="buy-btn">
+            <button onClick={() => handleBuyItem(1)} className="buy-btn">
               75 LE
             </button>
           </div>
           <div id="water-tool" className="item-card">
             <img src={water} alt="" />
             <h2>Water</h2>
-            <button onClick={() => handleBuyItem(3)} className="buy-btn">
+            <button onClick={() => handleBuyItem(2)} className="buy-btn">
               50 LE
             </button>
           </div>
           <div id="scarecrow-tool" className="item-card">
             <img src={scarecrow} alt="" />
             <h2>Scarecrow</h2>
-            <button onClick={() => handleBuyItem(4)} className="buy-btn">
+            <button onClick={() => handleBuyItem(3)} className="buy-btn">
               20 LE
             </button>
           </div>
           <div id="greenhouse" className="item-card">
             <img src={greenhouse} alt="" />
             <h2>G.House</h2>
-            <button onClick={() => handleBuyItem(5)} className="buy-btn">
+            <button onClick={() => handleBuyItem(4)} className="buy-btn">
               10 LE
             </button>
           </div>

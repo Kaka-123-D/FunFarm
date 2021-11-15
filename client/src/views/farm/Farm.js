@@ -35,22 +35,31 @@ export default class Farm extends Component {
   };
 
   handleUseItem = (type) => {
-    if (this.state.arrItems[type - 1].amount < 1) {
+    if (this.state.arrItems[type].amount < 1) {
       alert("dont enought item!");
       return;
     }
     let arr = [...this.state.arrItems];
-    arr[type - 1] = { ...arr[type - 1], amount: arr[type - 1].amount - 1 };
+    arr[type] = { ...arr[type], amount: arr[type].amount - 1 };
     this.setState({ arrItems: arr });
+
+    this.props.dataUser.body.inventory.tools[type]--;
+
+    
   };
 
   handleBuyItem = (type) => {
+    //mảng test bên client
     let arr = [...this.state.arrItems];
-    arr[type - 1] = { ...arr[type - 1], amount: arr[type - 1].amount + 1 };
+    arr[type] = { ...arr[type], amount: arr[type].amount + 1 };
     this.setState({ arrItems: arr });
+
+    // mảng do server trả về 
+    this.props.dataUser.body.inventory.tools[type] ++;
+
     axios({
       method: "post",
-      url: baseURL + "/farms/buy-tool",
+      url: baseURL + "/farm/buy-tool",
       data: {
         username: this.props.username,
         amount: 1,
@@ -65,9 +74,11 @@ export default class Farm extends Component {
     let arr = [...this.state.arrPlantsInInventory];
     arr[type] = { ...arr[type], amount: arr[type].amount + 1 };
     this.setState({ arrPlantsInInventory: arr });
+
+    this.props.dataUser.body.inventory.plants[type]++;
     axios({
       method: "post",
-      url: baseURL + "/farms/buy-plant",
+      url: baseURL + "/farm/buy-plant",
       data: {
         username: this.props.username,
         amount: 1,
@@ -80,6 +91,7 @@ export default class Farm extends Component {
 
   render() {
     return (
+      
       <div className="farm-background">
         <Nav />
         <Router>
@@ -110,6 +122,7 @@ export default class Farm extends Component {
                 <Land
                   arrPlantsInInventory={this.state.arrPlantsInInventory}
                   dataUser={this.props.dataUser}
+                  username={this.props.username}
                 />
               </div>
             </Route>

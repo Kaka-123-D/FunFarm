@@ -11,54 +11,111 @@ const db = require('../../config/db/index');
 
 class FarmController {
   async index(user) {
-    const farmings = await user.getFarmings();
-    var data = {};
-    if (farmings.length > 0) {
+    var farming_data = [];
+    try {
+      // const user = User.findOne({ where: { username: req.query.username } });
+      const farmings = await user.getFarmings();
+      const inventory = await user.getInventory();
+      const plants = await inventory.getPlants();
+      var lands = await inventory.getLands();
+      if (!lands.length) {
+        lands = await farmings[0].getLand();
+      }
+      const tools = await inventory.getTools();
+      var plants_amount = [0, 0];
+      var tools_amount = [0, 0, 0, 0, 0];
+      for (let i = 0; i < plants.length; i++) {
+        if (plants[i].plantName == "Sunflower Sapling") plants_amount[0]++;
+        else if (plants[i].plantName == "Sunflower mama") plants_amount[1]++;
+      }
+      for (let i = 0; i < tools.length; i++) {
+        if (tools[i].toolName == "Small Pot") tools_amount[0]++;
+        else if (tools[i].toolName == "Greenhouse") tools_amount[4]++;
+        else if (tools[i].toolName == "Big Pot") tools_amount[1]++;
+        else if (tools[i].toolName == "Water") tools_amount[2]++;
+        else if (tools[i].toolName == "Scarecrow") tools_amount[3]++;
+      }
+      
       for (let i = 0; i < farmings.length; i++) {
-        data = {
+        farming_data.push({
           plant: await farmings[i].getPlant(),
           land: await farmings[i].getLand(),
           tools: await farmings[i].getTools(),
-        };
+        });
       }
+      // res.send({
+      //   inventory: { plants: plants_amount, lands: lands, tools: tools_amount },
+      //   farming: farming_data,
+      // });
+      return {
+        inventory: {
+          plants: plants_amount,
+          lands: lands,
+          tools: tools_amount,
+        },
+        farming: farming_data,
+      };
+    } catch(err) {
+      // res.send({});
+      return {};
     }
-    return data;
   }
 
   async growPlant(req, res) {
-    const user = await User.findOne({
-      where: { username: req.body.username },
-    });
-    const inventory = await user.getInventory();
-    const plants = await inventory.getPlants({
-      where: { plantId: req.body.plantName, inventoryId: inventory.inventoryId },
-    });
-    const lands = await inventory.getLands({
-      where: { landId: req.body.landId },
-    });
-    const farming = await Farming.create({
-      amountLECreate: plants[0].amountLEGenerated,
-    });
-    await farming.setPlant(plants[0]);
-    await farming.setLand(lands[0]);
-    await user.addFarming(farming);
-    await Plant.update(
-      { inventoryId: null },
-      {
-        where: {
-          plantId: plants[0].plantId,
-        },
+    const data = req.body;
+    if (!data) {
+      res.send({ status: 0 });
+    } else {
+      try {
+        const user = await User.findOne({
+          where: { username: data.username },
+        });
+        const inventory = await user.getInventory();
+        const farmings = await user.getFarmings();
+        const plants = await inventory.getPlants({
+          where: {
+            plantName: (data.plantType == 0
+              ? "Sunflower Sapling"
+              : "Sunflower mama"),
+            inventoryId: inventory.inventoryId,
+          },
+        });
+        const lands = await farmings[0].getLand({
+          where: { landId: data.landId },
+        });
+        if (lands.amountPlot == 0) {
+          res.send({ status: 0 });
+          return;
+        } else {
+          console.log('h');
+          const farming = await Farming.create({
+            amountLECreate: plants[0].amountLEGenerated,
+          });
+          await farming.setPlant(plants[0]);
+          await farming.setLand(lands[0]);
+          await user.addFarming(farming);
+          await Plant.update(
+            { inventoryId: null },
+            {
+              where: {
+                plantId: plants[0].plantId,
+              },
+            }
+          );
+          await Land.update(
+            { amountPlot: lands.amountPlot - 1, inventoryId: null },
+            {
+              where: {
+                landId: lands.landId,
+              },
+            }
+          );
+          res.send({ status: 1, data: { plant: plants[0], land: lands } });
+        }
+      } catch(err) {
+        res.send({ status: 0 });
       }
-    );
-    await Land.update(
-      { inventoryId: null },
-      {
-        where: {
-          landId: req.body.landId,
-        },
-      }
-    );
-    res.send({ status: 1, farming: farming });
+    }
   }
 
   async addPot(req, res) {
@@ -110,92 +167,115 @@ class FarmController {
   }
 
   async buyPlant(req, res) {
-    const user = await User.findOne({ where: { username: req.body.username } });
-    const inventory = await user.getInventory();
-    for (let i = 0; i < req.body.amount; i++) {
-      let plant = {};
-      if (req.body.plantType == 1) {
-        const plantLine = await PlantLine.findOne({where: {plantLine: "mama"}});
-        plant = await Plant.create({
-          amountLEGenerated: 850,
-          timeToGrow: "144:00:00",
-          image: "mother-tree.png",
-          plantName: "Sunflower mama",
+    const data = req.body;
+    if (!data) {
+      res.send({ status: 0 });
+    } else {
+      try {
+        const user = await User.findOne({
+          where: { username: data.username },
         });
-        await plantLine.addPlant(plant);
-      } else {
-        const plantLine = await PlantLine.findOne({
-          where: { plantLine: "Sapling" },
-        });
-        plant = await Plant.create({
-          amountLEGenerated: 250,
-          timeToGrow: "72:00:00",
-          image: "child-tree.png",
-          plantName: "Sunflower Sapling",
-        });
-        await plantLine.addPlant(plant);
+        const inventory = await user.getInventory();
+        for (let i = 0; i < data.amount; i++) {
+          let plant = {};
+          if (data.plantType == 1) {
+            const plantLine = await PlantLine.findOne({
+              where: { plantLine: "mama" },
+            });
+            plant = await Plant.create({
+              amountLEGenerated: 850,
+              timeToGrow: "144:00:00",
+              image: "mother-tree.png",
+              plantName: "Sunflower mama",
+            });
+            await plantLine.addPlant(plant);
+          } else if(data.plantType == 0) {
+            const plantLine = await PlantLine.findOne({
+              where: { plantLine: "Sapling" },
+            });
+            plant = await Plant.create({
+              amountLEGenerated: 250,
+              timeToGrow: "72:00:00",
+              image: "child-tree.png",
+              plantName: "Sunflower Sapling",
+            });
+            await plantLine.addPlant(plant);
+          }
+          await inventory.addPlant(plant);
+        }
+        res.send({ status: 1 });
+      } catch(err) {
+        res.send({ status: 0 });
       }
-      await inventory.addPlant(plant);
     }
-    res.send({ status: 1 });
   }
 
   async buyTool(req, res) {
-    console.log(req.body.username);
-    const user = await User.findOne({ where: { username: req.body.username } });
-    const inventory = await user.getInventory();
-    for (let i = 0; i < req.body.amount; i++) {
-      let tool = {};
-      if (req.body.toolType == 1) {
-        tool = await Tool.create({
-          toolName: "Small Pot",
-          textDescription: "You need small pot to start farming.",
-          priceSell: 50,
-          useTime: "240:00:00",
-          useNumber: 1,
-          image: "smallPot.png",
+    const data = req.body;
+    if (!data) {
+      res.send({ status: 0 });
+    } else {
+      try {
+        const user = await User.findOne({
+          where: { username: data.username },
         });
-      } else if (req.body.toolType == 2) {
-        tool = await Tool.create({
-          toolName: "Big Pot",
-          textDescription:
-            "You need big pot to start farming. +1% chance to drop seeds.",
-          priceSell: 100,
-          useTime: "720:00:00",
-          useNumber: 1,
-          image: "bigPot.png",
-        });
-      } else if (req.body.toolType == 3) {
-        tool = await Tool.create({
-          toolName: "Water",
-          textDescription: "Don't forget to water your plants everyday.",
-          priceSell: 50,
-          useTime: "00:00:00",
-          useNumber: 100,
-          image: "water.png",
-        });
-      } else if (req.body.toolType == 4) {
-        tool = await Tool.create({
-          toolName: "Scarecrow",
-          textDescription: "Crows are unpredictable.",
-          priceSell: 20,
-          useTime: "00:00:00",
-          useNumber: 20,
-          image: "scarecrow.png",
-        });
-      } else {
-        tool = await Tool.create({
-          toolName: "Greenhouse",
-          textDescription: "No need to worry about tomorrow's weather.",
-          priceSell: 10,
-          useTime: "00:00:00",
-          useNumber: 10,
-          image: "greenhouse.png",
-        });
+        const inventory = await user.getInventory();
+        for (let i = 0; i < data.amount; i++) {
+          let tool = {};
+          if (data.toolType == 0) {
+            tool = await Tool.create({
+              toolName: "Small Pot",
+              textDescription: "You need small pot to start farming.",
+              priceSell: 50,
+              useTime: "240:00:00",
+              useNumber: 1,
+              image: "smallPot.png",
+            });
+          } else if (data.toolType == 1) {
+            tool = await Tool.create({
+              toolName: "Big Pot",
+              textDescription:
+                "You need big pot to start farming. +1% chance to drop seeds.",
+              priceSell: 100,
+              useTime: "720:00:00",
+              useNumber: 1,
+              image: "bigPot.png",
+            });
+          } else if (data.toolType == 2) {
+            tool = await Tool.create({
+              toolName: "Water",
+              textDescription: "Don't forget to water your plants everyday.",
+              priceSell: 50,
+              useTime: "00:00:00",
+              useNumber: 100,
+              image: "water.png",
+            });
+          } else if (data.toolType == 3) {
+            tool = await Tool.create({
+              toolName: "Scarecrow",
+              textDescription: "Crows are unpredictable.",
+              priceSell: 20,
+              useTime: "00:00:00",
+              useNumber: 20,
+              image: "scarecrow.png",
+            });
+          } else if (data.toolType == 4) {
+            tool = await Tool.create({
+              toolName: "Greenhouse",
+              textDescription: "No need to worry about tomorrow's weather.",
+              priceSell: 10,
+              useTime: "00:00:00",
+              useNumber: 10,
+              image: "greenhouse.png",
+            });
+          }
+          await inventory.addTool(tool);
+        }
+        res.send({ status: 1 });
+      } catch(err) {
+        res.send({ status: 0 });
       }
-      await inventory.addTool(tool);
     }
-    res.send({ status: 1 });
   }
 
   async test(req, res) {

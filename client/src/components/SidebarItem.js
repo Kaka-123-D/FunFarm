@@ -21,6 +21,7 @@ export default class SidebarItem extends Component {
       {img: scarecrow},
       {img: greenhouse},
     ],
+
   };
 
   render() {
@@ -31,17 +32,17 @@ export default class SidebarItem extends Component {
           <h1 className="ribbon"> Items </h1>
         </div>
 
-        {arrItems.map((item) => {
+        {dataUser.body.inventory.tools.map((item, index) => {
           return (
-            <div key={item.type} className="item-group">
-              <img src={this.state.arrImg[item.type - 1].img} alt="" className="item" />
+            <div key={index} className="item-group">
+              <img src={this.state.arrImg[index].img} alt="" className="item" />
               <button
                 className="use-btn"
-                onClick={() => handleUseItem(item.type)}
+                onClick={() => handleUseItem(index)}
               >
                 Use
               </button>
-              <span className="amount-item">{item.amount}</span>
+              <span className="amount-item">{item}</span>
             </div>
           );
         })}

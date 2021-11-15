@@ -33,11 +33,11 @@ class Register extends Component {
 
   handleRegister = (e) => {
     if (!this.state.user || !this.state.pass || !this.state.pass2) {
-      alert("missing params");
+      alert("Các trường không được bỏ trống!");
       return;
     }
     if (this.state.pass != this.state.pass2) {
-      alert("pass 1 and pass 2 must gioosng nhau");
+      alert("Mật khẩu 1 và mật khẩu 2 phải giống nhau!");
       return;
     }
     axios({
