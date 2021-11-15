@@ -60,6 +60,7 @@ export default class Farm extends Component {
       res.data.status === 1 ? alert("Buy success!") : alert("Error");
     });
   };
+  
   handleBuyPLant = (type) => {
     let arr = [...this.state.arrPlantsInInventory];
     arr[type] = { ...arr[type], amount: arr[type].amount + 1 };
@@ -89,6 +90,7 @@ export default class Farm extends Component {
                   arrItems={this.state.arrItems}
                   openShop={true}
                   handleUseItem={this.handleUseItem}
+                  dataUser={this.props.dataUser}
                 />
                 <ShopTool
                   moneyAmount={this.state.moneyAmount}
@@ -103,8 +105,12 @@ export default class Farm extends Component {
                   arrItems={this.state.arrItems}
                   openShop={false}
                   handleUseItem={this.handleUseItem}
+                  dataUser={this.props.dataUser}
                 />
-                <Land arrPlantsInInventory={this.state.arrPlantsInInventory} />
+                <Land
+                  arrPlantsInInventory={this.state.arrPlantsInInventory}
+                  dataUser={this.props.dataUser}
+                />
               </div>
             </Route>
           </Switch>

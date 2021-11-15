@@ -48,6 +48,7 @@ class Login extends Component {
           this.props.handleLoginOnUsername(this.state.user);
           setTimeout(() => {
             this.props.history.push("/farm");
+            this.props.setDataFromServer(res.data);
           }, 0);
         } else {
           alert("Login error!");

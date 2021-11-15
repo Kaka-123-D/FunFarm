@@ -21,7 +21,7 @@ class Nav extends Component {
       if (res.data.status === 1) {
         setTimeout(() => {
           this.props.history.push("/");
-        }, 2000);
+        }, 0);
       }
     });
   };

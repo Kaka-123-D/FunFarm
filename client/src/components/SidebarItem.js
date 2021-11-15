@@ -1,40 +1,30 @@
 import React, { Component } from "react";
 // import update from 'react-addons-update';
 import "../styles/SidebarItem.scss";
-// import smallPot from "../assets/images/smallPot.png";
-// import bigPot from "../assets/images/bigPot.png";
-// import water from "../assets/images/water.png";
-// import scarecrow from "../assets/images/scarecrow.png";
-// import greenhouse from "../assets/images/greenhouse.png";
+import smallPot from "../assets/images/smallPot.png";
+import bigPot from "../assets/images/bigPot.png";
+import water from "../assets/images/water.png";
+import scarecrow from "../assets/images/scarecrow.png";
+import greenhouse from "../assets/images/greenhouse.png";
+import sapling from "../assets/images/sapling.svg";
+import mama from "../assets/images/mama.png";
 import shop from "../assets/images/shop.png";
 import farm from "../assets/images/farm.png";
 import { Link } from "react-router-dom";
 
 export default class SidebarItem extends Component {
-  // state = {
-  //   openShop: false,
-  //   reload: false,
-  //   arrItems: [
-  //     { type: 1, amount: 0, img: smallPot },
-  //     { type: 2, amount: 0, img: bigPot },
-  //     { type: 3, amount: 0, img: water },
-  //     { type: 4, amount: 0, img: scarecrow },
-  //     { type: 5, amount: 0, img: greenhouse },
-  //   ],
-  // };
-
-  // handleUseItem = (type) => {
-  //   this.state.arrItems[type - 1].amount -= 1;
-  // }
-
-  // handleOpenShop = () => {
-  //   this.setState({
-  //     openShop: !this.state.openShop,
-  //   })
-  // }
+  state = {
+    arrImg: [
+      {img: smallPot},
+      {img: bigPot},
+      {img: water},
+      {img: scarecrow},
+      {img: greenhouse},
+    ],
+  };
 
   render() {
-    let { arrItems, openShop, handleUseItem } = this.props;
+    let { arrItems, openShop, handleUseItem, dataUser} = this.props;
     return (
       <div className="sidebar">
         <div className="ribbon-wrapper">
@@ -44,7 +34,7 @@ export default class SidebarItem extends Component {
         {arrItems.map((item) => {
           return (
             <div key={item.type} className="item-group">
-              <img src={item.img} alt="" className="item" />
+              <img src={this.state.arrImg[item.type - 1].img} alt="" className="item" />
               <button
                 className="use-btn"
                 onClick={() => handleUseItem(item.type)}

@@ -30,6 +30,17 @@
     }
   }
   #log-out {
-      float: right;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 25px;
+    font-weight: bold;
+    float: right;
+    padding: 10px 30px;
+    text-align: center;
+
+    &:hover {
+      background-color: #e95029;
+      color: white;
     }
+  }
 }
