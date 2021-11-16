@@ -68,7 +68,6 @@ class SiteController {
                   username: data.username,
                 },
               });
-              // console.log(await (await FarmController.index(users[i])).inventory.lands[0].landId);
               res.send({
                 status: 1,
                 body: await FarmController.index(users[i]),

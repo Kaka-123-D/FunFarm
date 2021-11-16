@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import sapling from "../assets/images/sapling.svg";
-import mama from "../assets/images/mama.png";
+import mama from "../assets/images/mama.svg";
 import noWaterLand from "../assets/images/noWaterLand.svg";
 import haveWaterLand from "../assets/images/haveWaterLand.svg";
 import "../styles/PLant.scss";

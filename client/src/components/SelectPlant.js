@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "../styles/selectPlant.scss";
 import sapling from "../assets/images/sapling.svg";
-import mama from "../assets/images/mama.png";
+import mama from "../assets/images/mama.svg";
 
 export default class SelectPlant extends Component {
   state = {

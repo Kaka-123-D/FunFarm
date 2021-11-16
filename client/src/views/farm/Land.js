@@ -3,7 +3,7 @@ import "../../styles/Land.scss";
 import Plant from "../../components/Plant";
 import SelectPlant from "../../components/SelectPlant";
 import sapling from "../../assets/images/sapling.svg";
-import mama from "../../assets/images/mama.png";
+import mama from "../../assets/images/mama.svg";
 import axios from "axios";
 
 const baseURL = "http://localhost:3000";
@@ -31,24 +31,42 @@ export default class Land extends Component {
     });
   };
 
+  handle;
+
   handleSelectPLant = (type) => {
     this.setState({
       arrPlants: [...this.state.arrPlants, type],
-    })
-    this.props.dataUser.body.inventory.plants[type]--;
-    console.log(this.props.dataUser.body.inventory.lands);
+    });
+
+    if (this.props.dataUser.body.inventory.lands[0].amountPlot !== 0) {
+      this.props.dataUser.body.inventory.lands[0].amountPlot--;
+      this.props.dataUser.body.inventory.plants[type]--;
+      this.props.dataUser.body.farmings = [
+        ...this.props.dataUser.body.farmings,
+        {
+          plant: {
+            plantName: type === 0 ? "Sunflower Sapling" : "Sunflower mama",
+          },
+        },
+      ];
+    }
+
     axios({
       method: "post",
       url: baseURL + "/farm/grow-plant",
       data: {
         username: this.props.username,
         plantType: type,
-        landId: this.props.dataUser.body.inventory.lands.landId,
+        landId: this.props.dataUser.body.inventory.lands[0].landId,
       },
     }).then((res) => {
-      res.data.status === 1 ? alert("Grow success!") : alert("Error");
+      if (res.data.status === 1) {
+        alert("Grow success!");
+      } else {
+        alert("Error");
+      }
     });
-  }
+  };
 
   render() {
     let show = this.state.showTableAddPlant;
@@ -61,8 +79,13 @@ export default class Land extends Component {
           </button>
         </div>
         <div id="body-land">
-          {this.state.arrPlants.map((item, index) => {
-            return <Plant type={item} />;
+          {console.log(this.props.dataUser.body.farmings)}
+          {this.props.dataUser.body.farmings.map((item, index) => {
+            return (
+              <Plant
+                type={item.plant.plantName == "Sunflower Sapling" ? 0 : 1}
+              />
+            );
           })}
         </div>
         {show === true ? (

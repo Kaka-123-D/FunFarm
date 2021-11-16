@@ -20,6 +20,11 @@ Inventory.init({
     allowNull: false,
     primaryKey: true,
     autoIncrement: true
+  },
+  amountLE: {
+    type: DataTypes.DECIMAL(20, 5),
+    allowNull: false,
+    defaultValue: 1000.00000
   }
 }, {
   sequelize,

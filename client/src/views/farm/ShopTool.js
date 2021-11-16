@@ -6,11 +6,11 @@ import water from "../../assets/images/water.png";
 import scarecrow from "../../assets/images/scarecrow.png";
 import greenhouse from "../../assets/images/greenhouse.png";
 import sapling from "../../assets/images/sapling.svg";
-import mama from "../../assets/images/mama.png";
+import mama from "../../assets/images/mama.svg";
 
 export default class ShopTool extends Component {
   render() {
-    let { moneyAmount, handleBuyItem ,handleBuyPLant} = this.props;
+    let { moneyAmount, handleBuyItem, handleBuyPLant } = this.props;
     return (
       <div className="shop">
         <div id="info-shop">
@@ -21,14 +21,15 @@ export default class ShopTool extends Component {
             <img src={smallPot} alt="" />
             <h2>Small Pot</h2>
             <button onClick={() => handleBuyItem(0)} className="buy-btn">
-              25 LE
+              50 LE
             </button>
+            {console.log("hello")}
           </div>
           <div id="big-pot-tool" className="item-card">
             <img src={bigPot} alt="" />
             <h2>Big Pot</h2>
             <button onClick={() => handleBuyItem(1)} className="buy-btn">
-              75 LE
+              100 LE
             </button>
           </div>
           <div id="water-tool" className="item-card">
@@ -56,14 +57,14 @@ export default class ShopTool extends Component {
             <img src={sapling} alt="" />
             <h2>Sapling</h2>
             <button onClick={() => handleBuyPLant(0)} className="buy-btn">
-              50 LE
+              100 LE
             </button>
           </div>
           <div id="mama" className="item-card">
             <img src={mama} alt="" />
             <h2>Root tree</h2>
             <button onClick={() => handleBuyPLant(1)} className="buy-btn">
-              75 LE
+              200 LE
             </button>
           </div>
         </div>

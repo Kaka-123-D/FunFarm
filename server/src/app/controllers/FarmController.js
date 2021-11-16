@@ -13,14 +13,14 @@ class FarmController {
   async index(user) {
     var farming_data = [];
     try {
-      // const user = User.findOne({ where: { username: req.query.username } });
+      // Có thể []
       const farmings = await user.getFarmings();
       const inventory = await user.getInventory();
+      // Có thể []
       const plants = await inventory.getPlants();
-      var lands = await inventory.getLands();
-      if (!lands.length) {
-        lands = await farmings[0].getLand();
-      }
+      // Có thể []
+      const lands_inventory = await inventory.getLands();
+      // Có thể []
       const tools = await inventory.getTools();
       var plants_amount = [0, 0];
       var tools_amount = [0, 0, 0, 0, 0];
@@ -39,24 +39,19 @@ class FarmController {
       for (let i = 0; i < farmings.length; i++) {
         farming_data.push({
           plant: await farmings[i].getPlant(),
-          land: await farmings[i].getLand(),
           tools: await farmings[i].getTools(),
         });
       }
-      // res.send({
-      //   inventory: { plants: plants_amount, lands: lands, tools: tools_amount },
-      //   farming: farming_data,
-      // });
       return {
         inventory: {
           plants: plants_amount,
-          lands: lands,
+          lands: lands_inventory,
           tools: tools_amount,
+          moneyAmount: parseInt(inventory.amountLE),
         },
-        farming: farming_data,
+        farmings: farming_data,
       };
     } catch(err) {
-      // res.send({});
       return {};
     }
   }
@@ -71,7 +66,11 @@ class FarmController {
           where: { username: data.username },
         });
         const inventory = await user.getInventory();
+
+        // Có thể []
         const farmings = await user.getFarmings();
+
+        // Có thể []
         const plants = await inventory.getPlants({
           where: {
             plantName: (data.plantType == 0
@@ -80,19 +79,19 @@ class FarmController {
             inventoryId: inventory.inventoryId,
           },
         });
-        const lands = await farmings[0].getLand({
+        // Có thể []
+        const lands_inventory = await inventory.getLands({
           where: { landId: data.landId },
         });
-        if (lands.amountPlot == 0) {
+        // Có thể []
+        if (!lands_inventory[0].amountPlot) {
           res.send({ status: 0 });
           return;
         } else {
-          console.log('h');
           const farming = await Farming.create({
             amountLECreate: plants[0].amountLEGenerated,
           });
           await farming.setPlant(plants[0]);
-          await farming.setLand(lands[0]);
           await user.addFarming(farming);
           await Plant.update(
             { inventoryId: null },
@@ -102,15 +101,14 @@ class FarmController {
               },
             }
           );
-          await Land.update(
-            { amountPlot: lands.amountPlot - 1, inventoryId: null },
-            {
-              where: {
-                landId: lands.landId,
-              },
+          await Land.update({
+            amountPlot: lands_inventory[0].amountPlot - 1
+          }, {
+            where: {
+              landId: lands_inventory[0].landId
             }
-          );
-          res.send({ status: 1, data: { plant: plants[0], land: lands } });
+          })
+          res.send({ status: 1, farmings: Farming.findAll()});
         }
       } catch(err) {
         res.send({ status: 0 });
@@ -189,6 +187,11 @@ class FarmController {
               plantName: "Sunflower mama",
             });
             await plantLine.addPlant(plant);
+            await Inventory.update({ amountLE: inventory.amountLE -= 200}, {
+              where: {
+                inventoryId: inventory.inventoryId
+              }
+            });
           } else if(data.plantType == 0) {
             const plantLine = await PlantLine.findOne({
               where: { plantLine: "Sapling" },
@@ -200,6 +203,14 @@ class FarmController {
               plantName: "Sunflower Sapling",
             });
             await plantLine.addPlant(plant);
+            await Inventory.update(
+              { amountLE: (inventory.amountLE -= 100) },
+              {
+                where: {
+                  inventoryId: inventory.inventoryId,
+                },
+              }
+            );
           }
           await inventory.addPlant(plant);
         }
@@ -231,6 +242,14 @@ class FarmController {
               useNumber: 1,
               image: "smallPot.png",
             });
+            await Inventory.update(
+              { amountLE: (inventory.amountLE -= 50) },
+              {
+                where: {
+                  inventoryId: inventory.inventoryId,
+                },
+              }
+            );
           } else if (data.toolType == 1) {
             tool = await Tool.create({
               toolName: "Big Pot",
@@ -241,6 +260,14 @@ class FarmController {
               useNumber: 1,
               image: "bigPot.png",
             });
+            await Inventory.update(
+              { amountLE: (inventory.amountLE -= 100) },
+              {
+                where: {
+                  inventoryId: inventory.inventoryId,
+                },
+              }
+            );
           } else if (data.toolType == 2) {
             tool = await Tool.create({
               toolName: "Water",
@@ -250,6 +277,14 @@ class FarmController {
               useNumber: 100,
               image: "water.png",
             });
+            await Inventory.update(
+              { amountLE: (inventory.amountLE -= 50) },
+              {
+                where: {
+                  inventoryId: inventory.inventoryId,
+                },
+              }
+            );
           } else if (data.toolType == 3) {
             tool = await Tool.create({
               toolName: "Scarecrow",
@@ -259,6 +294,14 @@ class FarmController {
               useNumber: 20,
               image: "scarecrow.png",
             });
+            await Inventory.update(
+              { amountLE: (inventory.amountLE -= 20) },
+              {
+                where: {
+                  inventoryId: inventory.inventoryId,
+                },
+              }
+            );
           } else if (data.toolType == 4) {
             tool = await Tool.create({
               toolName: "Greenhouse",
@@ -268,6 +311,14 @@ class FarmController {
               useNumber: 10,
               image: "greenhouse.png",
             });
+            await Inventory.update(
+              { amountLE: (inventory.amountLE -= 10) },
+              {
+                where: {
+                  inventoryId: inventory.inventoryId,
+                },
+              }
+            );
           }
           await inventory.addTool(tool);
         }

@@ -7,7 +7,7 @@ import water from "../assets/images/water.png";
 import scarecrow from "../assets/images/scarecrow.png";
 import greenhouse from "../assets/images/greenhouse.png";
 import sapling from "../assets/images/sapling.svg";
-import mama from "../assets/images/mama.png";
+import mama from "../assets/images/mama.svg";
 import shop from "../assets/images/shop.png";
 import farm from "../assets/images/farm.png";
 import { Link } from "react-router-dom";
