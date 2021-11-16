@@ -16,7 +16,6 @@ class FarmController {
       const farmings = await user.getFarmings();
       const inventory = await user.getInventory();
       const plants = await inventory.getPlants();
-      console.log(plants);
       const lands = await inventory.getLands();
       const tools = await inventory.getTools();
       
