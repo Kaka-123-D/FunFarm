@@ -1,5 +1,19 @@
 .card {
-    border: 2px solid black;
-    background-color: #e4e39e;
-    opacity: 0.5;
+  border: 2px solid black;
+  background-color: #e4e39e;
+  opacity: 0.5;
+  position: relative;
+  min-height: 190px;
+
+  .plantFarming {
+    position: absolute;
+    left: 65px;
+    top: -5px;
+    max-height: 156px;
+  }
+  .landFarming {
+    position: absolute;
+    left: 50px;
+    top: 75px;
+  }
 }

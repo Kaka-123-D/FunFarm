@@ -19,9 +19,7 @@ class Nav extends Component {
       },
     }).then((res) => {
       if (res.data.status === 1) {
-        setTimeout(() => {
-          this.props.history.push("/");
-        }, 2000);
+        this.props.history.push("/");
       }
     });
   };

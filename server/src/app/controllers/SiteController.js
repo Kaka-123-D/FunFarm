@@ -68,7 +68,10 @@ class SiteController {
                   username: data.username,
                 },
               });
-              res.send({ status: 1, body: await FarmController.index(users[i]) });
+              res.send({
+                status: 1,
+                body: await FarmController.index(users[i]),
+              });
               return;
             }
           }

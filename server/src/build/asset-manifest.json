@@ -1,34 +1,35 @@
 {
   "files": {
-    "main.css": "/static/css/main.d885784d.chunk.css",
-    "main.js": "/static/js/main.741d2d45.chunk.js",
-    "main.js.map": "/static/js/main.741d2d45.chunk.js.map",
+    "main.css": "/static/css/main.3c3e7e6a.chunk.css",
+    "main.js": "/static/js/main.a1dd64c5.chunk.js",
+    "main.js.map": "/static/js/main.a1dd64c5.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.9f3dacaa.js",
     "runtime-main.js.map": "/static/js/runtime-main.9f3dacaa.js.map",
-    "static/js/2.d52bf9e1.chunk.js": "/static/js/2.d52bf9e1.chunk.js",
-    "static/js/2.d52bf9e1.chunk.js.map": "/static/js/2.d52bf9e1.chunk.js.map",
+    "static/js/2.9d6f6ea1.chunk.js": "/static/js/2.9d6f6ea1.chunk.js",
+    "static/js/2.9d6f6ea1.chunk.js.map": "/static/js/2.9d6f6ea1.chunk.js.map",
     "static/js/3.d9c9cb48.chunk.js": "/static/js/3.d9c9cb48.chunk.js",
     "static/js/3.d9c9cb48.chunk.js.map": "/static/js/3.d9c9cb48.chunk.js.map",
     "index.html": "/index.html",
-    "static/css/main.d885784d.chunk.css.map": "/static/css/main.d885784d.chunk.css.map",
-    "static/js/2.d52bf9e1.chunk.js.LICENSE.txt": "/static/js/2.d52bf9e1.chunk.js.LICENSE.txt",
+    "static/css/main.3c3e7e6a.chunk.css.map": "/static/css/main.3c3e7e6a.chunk.css.map",
+    "static/js/2.9d6f6ea1.chunk.js.LICENSE.txt": "/static/js/2.9d6f6ea1.chunk.js.LICENSE.txt",
     "static/media/Home.scss": "/static/media/background.9f890369.png",
     "static/media/bigPot.430c95af.png": "/static/media/bigPot.430c95af.png",
     "static/media/Farm.scss": "/static/media/farm-background.ebc3c244.jpg",
     "static/media/farm.399e2f89.png": "/static/media/farm.399e2f89.png",
+    "static/media/haveWaterLand.270fcedd.svg": "/static/media/haveWaterLand.270fcedd.svg",
     "static/media/icon-farm.2c93f7fd.svg": "/static/media/icon-farm.2c93f7fd.svg",
     "static/media/icon-marketplace.eed9687a.svg": "/static/media/icon-marketplace.eed9687a.svg",
     "static/media/logo.999578d0.png": "/static/media/logo.999578d0.png",
     "static/media/mama.36c2e3a3.png": "/static/media/mama.36c2e3a3.png",
+    "static/media/noWaterLand.20b9af07.svg": "/static/media/noWaterLand.20b9af07.svg",
     "static/media/sapling.20fd3092.svg": "/static/media/sapling.20fd3092.svg",
-    "static/media/scarecrow.50e7720a.png": "/static/media/scarecrow.50e7720a.png",
     "static/media/shop.6f5bc8aa.png": "/static/media/shop.6f5bc8aa.png",
     "static/media/smallPot.ff8750bb.png": "/static/media/smallPot.ff8750bb.png"
   },
   "entrypoints": [
     "static/js/runtime-main.9f3dacaa.js",
-    "static/js/2.d52bf9e1.chunk.js",
-    "static/css/main.d885784d.chunk.css",
-    "static/js/main.741d2d45.chunk.js"
+    "static/js/2.9d6f6ea1.chunk.js",
+    "static/css/main.3c3e7e6a.chunk.css",
+    "static/js/main.a1dd64c5.chunk.js"
   ]
 }

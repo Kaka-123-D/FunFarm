@@ -13,20 +13,44 @@ class FarmController {
   async index(user) {
     var farming_data = [];
     try {
+      // Có thể []
       const farmings = await user.getFarmings();
       const inventory = await user.getInventory();
+      // Có thể []
       const plants = await inventory.getPlants();
-      const lands = await inventory.getLands();
+      // Có thể []
+      const lands_inventory = await inventory.getLands();
+      // Có thể []
       const tools = await inventory.getTools();
+      var plants_amount = [0, 0];
+      var tools_amount = [0, 0, 0, 0, 0];
+      for (let i = 0; i < plants.length; i++) {
+        if (plants[i].plantName == "Sunflower Sapling") plants_amount[0]++;
+        else if (plants[i].plantName == "Sunflower mama") plants_amount[1]++;
+      }
+      for (let i = 0; i < tools.length; i++) {
+        if (tools[i].toolName == "Small Pot") tools_amount[0]++;
+        else if (tools[i].toolName == "Greenhouse") tools_amount[4]++;
+        else if (tools[i].toolName == "Big Pot") tools_amount[1]++;
+        else if (tools[i].toolName == "Water") tools_amount[2]++;
+        else if (tools[i].toolName == "Scarecrow") tools_amount[3]++;
+      }
       
       for (let i = 0; i < farmings.length; i++) {
         farming_data.push({
           plant: await farmings[i].getPlant(),
-          land: await farmings[i].getLand(),
           tools: await farmings[i].getTools(),
         });
       }
-      return {inventory: {plants: plants, lands: lands, tools: tools}, farming: farming_data};
+      return {
+        inventory: {
+          plants: plants_amount,
+          lands: lands_inventory,
+          tools: tools_amount,
+          moneyAmount: parseInt(inventory.amountLE),
+        },
+        farmings: farming_data,
+      };
     } catch(err) {
       return {};
     }
@@ -42,16 +66,25 @@ class FarmController {
           where: { username: data.username },
         });
         const inventory = await user.getInventory();
+
+        // Có thể []
+        const farmings = await user.getFarmings();
+
+        // Có thể []
         const plants = await inventory.getPlants({
           where: {
-            plantId: data.plantName,
+            plantName: (data.plantType == 0
+              ? "Sunflower Sapling"
+              : "Sunflower mama"),
             inventoryId: inventory.inventoryId,
           },
         });
-        const lands = await inventory.getLands({
+        // Có thể []
+        const lands_inventory = await inventory.getLands({
           where: { landId: data.landId },
         });
-        if (lands[0].amountPlot == 0) {
+        // Có thể []
+        if (!lands_inventory[0].amountPlot) {
           res.send({ status: 0 });
           return;
         } else {
@@ -59,7 +92,6 @@ class FarmController {
             amountLECreate: plants[0].amountLEGenerated,
           });
           await farming.setPlant(plants[0]);
-          await farming.setLand(lands[0]);
           await user.addFarming(farming);
           await Plant.update(
             { inventoryId: null },
@@ -69,15 +101,14 @@ class FarmController {
               },
             }
           );
-          await Land.update(
-            { amountPlot: lands[0].amountPlot - 1, inventoryId: null },
-            {
-              where: {
-                landId: lands[0].landId,
-              },
+          await Land.update({
+            amountPlot: lands_inventory[0].amountPlot - 1
+          }, {
+            where: {
+              landId: lands_inventory[0].landId
             }
-          );
-          res.send({ status: 1, data: { plant: plants[0], land: lands[0] } });
+          })
+          res.send({ status: 1, farmings: Farming.findAll()});
         }
       } catch(err) {
         res.send({ status: 0 });
@@ -156,6 +187,11 @@ class FarmController {
               plantName: "Sunflower mama",
             });
             await plantLine.addPlant(plant);
+            await Inventory.update({ amountLE: inventory.amountLE -= 200}, {
+              where: {
+                inventoryId: inventory.inventoryId
+              }
+            });
           } else if(data.plantType == 0) {
             const plantLine = await PlantLine.findOne({
               where: { plantLine: "Sapling" },
@@ -167,6 +203,14 @@ class FarmController {
               plantName: "Sunflower Sapling",
             });
             await plantLine.addPlant(plant);
+            await Inventory.update(
+              { amountLE: (inventory.amountLE -= 100) },
+              {
+                where: {
+                  inventoryId: inventory.inventoryId,
+                },
+              }
+            );
           }
           await inventory.addPlant(plant);
         }
@@ -189,7 +233,7 @@ class FarmController {
         const inventory = await user.getInventory();
         for (let i = 0; i < data.amount; i++) {
           let tool = {};
-          if (data.toolType == 1) {
+          if (data.toolType == 0) {
             tool = await Tool.create({
               toolName: "Small Pot",
               textDescription: "You need small pot to start farming.",
@@ -198,7 +242,15 @@ class FarmController {
               useNumber: 1,
               image: "smallPot.png",
             });
-          } else if (data.toolType == 2) {
+            await Inventory.update(
+              { amountLE: (inventory.amountLE -= 50) },
+              {
+                where: {
+                  inventoryId: inventory.inventoryId,
+                },
+              }
+            );
+          } else if (data.toolType == 1) {
             tool = await Tool.create({
               toolName: "Big Pot",
               textDescription:
@@ -208,7 +260,15 @@ class FarmController {
               useNumber: 1,
               image: "bigPot.png",
             });
-          } else if (data.toolType == 3) {
+            await Inventory.update(
+              { amountLE: (inventory.amountLE -= 100) },
+              {
+                where: {
+                  inventoryId: inventory.inventoryId,
+                },
+              }
+            );
+          } else if (data.toolType == 2) {
             tool = await Tool.create({
               toolName: "Water",
               textDescription: "Don't forget to water your plants everyday.",
@@ -217,7 +277,15 @@ class FarmController {
               useNumber: 100,
               image: "water.png",
             });
-          } else if (data.toolType == 4) {
+            await Inventory.update(
+              { amountLE: (inventory.amountLE -= 50) },
+              {
+                where: {
+                  inventoryId: inventory.inventoryId,
+                },
+              }
+            );
+          } else if (data.toolType == 3) {
             tool = await Tool.create({
               toolName: "Scarecrow",
               textDescription: "Crows are unpredictable.",
@@ -226,7 +294,15 @@ class FarmController {
               useNumber: 20,
               image: "scarecrow.png",
             });
-          } else if (data.toolType == 5) {
+            await Inventory.update(
+              { amountLE: (inventory.amountLE -= 20) },
+              {
+                where: {
+                  inventoryId: inventory.inventoryId,
+                },
+              }
+            );
+          } else if (data.toolType == 4) {
             tool = await Tool.create({
               toolName: "Greenhouse",
               textDescription: "No need to worry about tomorrow's weather.",
@@ -235,6 +311,14 @@ class FarmController {
               useNumber: 10,
               image: "greenhouse.png",
             });
+            await Inventory.update(
+              { amountLE: (inventory.amountLE -= 10) },
+              {
+                where: {
+                  inventoryId: inventory.inventoryId,
+                },
+              }
+            );
           }
           await inventory.addTool(tool);
         }

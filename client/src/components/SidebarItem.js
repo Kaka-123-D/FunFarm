@@ -1,57 +1,48 @@
 import React, { Component } from "react";
 // import update from 'react-addons-update';
 import "../styles/SidebarItem.scss";
-// import smallPot from "../assets/images/smallPot.png";
-// import bigPot from "../assets/images/bigPot.png";
-// import water from "../assets/images/water.png";
-// import scarecrow from "../assets/images/scarecrow.png";
-// import greenhouse from "../assets/images/greenhouse.png";
+import smallPot from "../assets/images/smallPot.png";
+import bigPot from "../assets/images/bigPot.png";
+import water from "../assets/images/water.png";
+import scarecrow from "../assets/images/scarecrow.png";
+import greenhouse from "../assets/images/greenhouse.png";
+import sapling from "../assets/images/sapling.svg";
+import mama from "../assets/images/mama.png";
 import shop from "../assets/images/shop.png";
 import farm from "../assets/images/farm.png";
 import { Link } from "react-router-dom";
 
 export default class SidebarItem extends Component {
-  // state = {
-  //   openShop: false,
-  //   reload: false,
-  //   arrItems: [
-  //     { type: 1, amount: 0, img: smallPot },
-  //     { type: 2, amount: 0, img: bigPot },
-  //     { type: 3, amount: 0, img: water },
-  //     { type: 4, amount: 0, img: scarecrow },
-  //     { type: 5, amount: 0, img: greenhouse },
-  //   ],
-  // };
+  state = {
+    arrImg: [
+      {img: smallPot},
+      {img: bigPot},
+      {img: water},
+      {img: scarecrow},
+      {img: greenhouse},
+    ],
 
-  // handleUseItem = (type) => {
-  //   this.state.arrItems[type - 1].amount -= 1;
-  // }
-
-  // handleOpenShop = () => {
-  //   this.setState({
-  //     openShop: !this.state.openShop,
-  //   })
-  // }
+  };
 
   render() {
-    let { arrItems, openShop, handleUseItem } = this.props;
+    let { arrItems, openShop, handleUseItem, dataUser} = this.props;
     return (
       <div className="sidebar">
         <div className="ribbon-wrapper">
           <h1 className="ribbon"> Items </h1>
         </div>
 
-        {arrItems.map((item) => {
+        {dataUser.body.inventory.tools.map((item, index) => {
           return (
-            <div key={item.type} className="item-group">
-              <img src={item.img} alt="" className="item" />
+            <div key={index} className="item-group">
+              <img src={this.state.arrImg[index].img} alt="" className="item" />
               <button
                 className="use-btn"
-                onClick={() => handleUseItem(item.type)}
+                onClick={() => handleUseItem(index)}
               >
                 Use
               </button>
-              <span className="amount-item">{item.amount}</span>
+              <span className="amount-item">{item}</span>
             </div>
           );
         })}

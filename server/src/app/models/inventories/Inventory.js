@@ -21,7 +21,7 @@ Inventory.init({
     primaryKey: true,
     autoIncrement: true
   },
-  amountLe: {
+  amountLE: {
     type: DataTypes.DECIMAL(20, 5),
     allowNull: false,
     defaultValue: 1000.00000

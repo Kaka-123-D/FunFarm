@@ -9,19 +9,28 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 class App extends React.Component {
   state = {
     username: "",
+    dataUser: {},
   };
 
   handleLoginOnUsername = (username) => {
     this.setState({ username: username });
     console.log("username: " + username);
   };
+
+  setDataFromServer = (data) => {
+    this.setState({ dataUser: data });
+  };
   render() {
+    console.log(this.state.dataUser);
     return (
       <>
         <Router>
           <Switch>
             <Route path="/login">
-              <Login handleLoginOnUsername={this.handleLoginOnUsername} />
+              <Login
+                handleLoginOnUsername={this.handleLoginOnUsername}
+                setDataFromServer={this.setDataFromServer}
+              />
             </Route>
             <Route path="/register">
               <Register />
@@ -30,7 +39,7 @@ class App extends React.Component {
               <Home />
             </Route>
             <Route path="/farm">
-              <Farm username={this.state.username} />
+              <Farm username={this.state.username} dataUser={this.state.dataUser} />
             </Route>
             <Route path="/farm/shop">
               <Farm />

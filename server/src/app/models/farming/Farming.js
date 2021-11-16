@@ -39,13 +39,6 @@ Farming.belongsTo(User, {
   foreignKey: 'userId'
 });
 
-Farming.hasOne(Land, {
-  foreignKey: 'farmingId'
-});
-Land.belongsTo(Farming, {
-  foreignKey: 'farmingId'
-});
-
 Farming.hasOne(Plant, {
   foreignKey: 'farmingId'
 });
