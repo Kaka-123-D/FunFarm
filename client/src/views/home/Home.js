@@ -15,8 +15,8 @@ export default class Home extends Component {
             <button className="btn">Login</button>
             <br />
           </Link>
-          <Link to="/farm">
-            <button className="btn">Farm</button>
+          <Link to="/marketplace">
+            <button className="btn">Marketplace</button>
             <br />
           </Link>
           <Link to="/about">

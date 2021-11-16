@@ -1,0 +1,88 @@
+.selling-table {
+  flex: 10;
+  background-color: #272c3b;
+  margin: 30px;
+  border-radius: 20px;
+  position: relative;
+
+  .header-selling-table {
+    background-color: #536392;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    padding: 5px;
+    height: 50px;
+
+    .select-tab {
+      list-style: none;
+      display: inline;
+
+      li {
+        cursor: pointer;
+        border-right: 2px solid black;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        float: left;
+        height: 50px;
+        width: 150px;
+        color: white;
+        font-size: 20px;
+        font-weight: bold;
+        padding-left: 20px;
+        padding-right: 20px;
+
+        &:hover {
+          background-color: #6a7aac;
+        }
+        .icon {
+          max-width: 27px;
+        }
+      }
+    }
+
+    .info-table {
+      float: right;
+      width: 350px;
+      height: 50px;
+      position: relative;
+
+      .sort-type {
+        border-radius: 5px;
+        background-color: #536392;
+        padding: 10px;
+        border: 2px solid white;
+        color: white;
+        top: 0;
+        left: 180px;
+        position: absolute;
+        font-size: 20px;
+      }
+
+      .count-plants {
+        color: white;
+        font-size: 20px;
+        font-weight: bold;
+      }
+    }
+  }
+  .body-selling-table {
+    overflow-y: scroll;
+    height: 70vh;
+  }
+  .next-page {
+    color: white;
+    margin-top: 5px;
+    margin-left: 26vw;
+
+    button {
+      width: 50px;
+      height: 30px;
+      border-radius:10px;
+    }
+
+    input {
+      width: 30px;
+      height: 20px;
+    }
+  }
+}

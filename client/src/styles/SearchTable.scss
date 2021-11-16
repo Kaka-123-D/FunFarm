@@ -1,0 +1,95 @@
+.search-table {
+  flex: 3;
+  background-color: #272c3b;
+  margin: 30px;
+  border-radius: 20px;
+  margin-left: 0px;
+  padding: 15px;
+
+  .header-search-table {
+    height: 50px;
+    position: relative;
+
+    p {
+      color: rgb(233, 178, 178);
+      font-size: 30px;
+      font-weight: bold;
+    }
+    .clear-filter-btn {
+      top: 0;
+      left: 230px;
+      position: absolute;
+      padding: 8px;
+      font-size: 15px;
+      color: rgb(194, 238, 214);
+      background-color: #5889e4;
+      border: 1px solid white;
+      border-radius: 5px;
+    }
+  }
+
+  .body-search-table {
+    p {
+      color: white;
+      font-size: 20px;
+      font-weight: bold;
+    }
+    .search-type {
+      .row-type {
+        margin-top: 20px;
+        display: inline-block;
+
+        span {
+          border-radius: 5px;
+          cursor: pointer;
+          margin-left: 15px;
+          padding: 5px;
+          padding-top: 12px;
+          border: 1px solid #d81021;
+        }
+      }
+    }
+    .search-rarity {
+      .row-rarity {
+        margin-top: 13px;
+        margin-left: 15px;
+      }
+      .rarity-btn {
+        cursor: pointer;
+        margin-left: 13px;
+        width: 130px;
+        font-weight: bold;
+        border-radius: 5px;
+        border: 2px solid #777776;
+        padding: 10px;
+      }
+      #common-rarity-btn {
+        background-image: linear-gradient(#90e97a, pink);
+      }
+      #uncommon-rarity-btn {
+        background-image: linear-gradient(#7185f3, pink);
+      }
+      #rare-rarity-btn {
+        background-image: linear-gradient(#ee5e5e, pink);
+      }
+      #mythic-rarity-btn {
+        background-image: linear-gradient(#c505f5, pink);
+      }
+    }
+
+    .search-id {
+      input {
+        border: 1px solid #db1313;
+        padding: 10px;
+        border-radius: 10px;
+        margin-left: 20px;
+      }
+      #confirm-search-id {
+        border: 1px solid #db1313;
+        padding: 10px;
+        border-radius: 10px;
+        margin-left: 20px;
+      }
+    }
+  }
+}
