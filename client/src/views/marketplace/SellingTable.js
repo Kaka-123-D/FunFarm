@@ -53,7 +53,7 @@ export default class SellingTable extends Component {
         </div>
         <div className="next-page">
           <button>&#8249;</button>
-          &nbsp;Page: <input value={1}></input>&nbsp; of {100}&nbsp;
+          &nbsp;Page: <input value={1}></input>&nbsp;
           <button>&#8250;</button>
         </div>
       </div>

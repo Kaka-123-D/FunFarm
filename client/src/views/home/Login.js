@@ -65,9 +65,9 @@ class Login extends Component {
     return (
       <div className="background">
         <div className="container">
-          <Link to="/">
+          {/* <Link to="/">
             <button> X </button>
-          </Link>
+          </Link> */}
           <div className="button-group">
             <div id="switch-login"></div>
             <button className="toggle-btn">Login</button>

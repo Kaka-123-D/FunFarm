@@ -63,9 +63,9 @@ class Register extends Component {
     return (
       <div className="background">
         <div className="container">
-          <Link to="/">
+          {/* <Link to="/">
             <button> X </button>
-          </Link>
+          </Link> */}
           <div className="button-group">
             <div id="switch-register"></div>
             <Link to="/login">

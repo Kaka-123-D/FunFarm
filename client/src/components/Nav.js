@@ -31,11 +31,11 @@ class Nav extends Component {
           <a href="/">
             <img src={logo} alt="logo" className="logo" />
           </a>
-          <NavLink activeClassName="active" to="/marketplace">
+          <a href="/marketplace">
             <img src={iconMarket} alt="icon-market" className="icon" />
             &nbsp;Marketplace
-          </NavLink>
-          <NavLink activeClassName="active" to="/farm">
+          </a>
+          <NavLink to="/farm">
             <img src={iconFarm} alt="icon-farm" className="icon" />
             &nbsp;Farm
           </NavLink>

@@ -184,7 +184,7 @@ export default class Farm extends Component {
           res.data.status === 1 ? alert("Buy success!") : alert("Error");
         });
       }
-    }
+    } 
   };
 
   render() {
